@@ -309,3 +309,47 @@ MIT License - feel free to use this in your own projects!
 ## Support
 
 If you encounter any issues or have questions, please file an issue on GitHub.
+
+## Maintainer notes
+
+### Publishing
+
+To publish a new version:
+
+1. Update version in package.json
+2. Run tests and build:
+   ```bash
+   npm run prepublishOnly
+   ```
+3. Publish to npm:
+   ```bash
+   npm publish
+   ```
+
+For beta releases:
+
+```bash
+npm publish --tag beta
+```
+
+Before publishing:
+
+1. Test the package locally:
+
+```bash
+npm pack
+```
+
+2. Review the generated `.tgz` file to ensure only necessary files are included
+
+3. Test the package in a new project:
+
+```bash
+npm link
+```
+
+4. Publish:
+
+```bash
+npm publish
+```
