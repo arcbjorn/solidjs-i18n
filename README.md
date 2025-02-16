@@ -16,17 +16,17 @@ A lightweight, type-safe internationalization library for SolidJS applications.
 ## Installation
 
 ```bash
-npm install solid-i18n
+npm install @arc/solid-i18n
 # or
-yarn add solid-i18n
+yarn add @arc/solid-i18n
 # or
-pnpm add solid-i18n
+pnpm add @arc/solid-i18n
 ```
 
 ## Quick Start
 
 ```typescript
-import { I18nProvider, useI18n } from 'solid-i18n';
+import { I18nProvider, useI18n } from '@arc/solid-i18n';
 
 // Define your translations
 const translations = {
@@ -316,20 +316,26 @@ If you encounter any issues or have questions, please file an issue on GitHub.
 
 To publish a new version:
 
-1. Update version in package.json
-2. Run tests and build:
+1. Update CHANGELOG.md
+2. Update version in package.json
+3. Create git tag:
    ```bash
-   npm run prepublishOnly
+   git tag -a v0.1.0 -m "Initial release"
+   git push origin v0.1.0
    ```
-3. Publish to npm:
+4. Run build and tests:
    ```bash
-   npm publish
+   pnpm run prepublishOnly
+   ```
+5. Publish to npm:
+   ```bash
+   pnpm publish --access public
    ```
 
 For beta releases:
 
 ```bash
-npm publish --tag beta
+pnpm publish --tag beta
 ```
 
 Before publishing:
@@ -337,7 +343,7 @@ Before publishing:
 1. Test the package locally:
 
 ```bash
-npm pack
+pnpm pack
 ```
 
 2. Review the generated `.tgz` file to ensure only necessary files are included
@@ -345,11 +351,11 @@ npm pack
 3. Test the package in a new project:
 
 ```bash
-npm link
+pnpm link
 ```
 
 4. Publish:
 
 ```bash
-npm publish
+pnpm publish
 ```
