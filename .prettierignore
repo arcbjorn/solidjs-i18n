@@ -1,0 +1,12 @@
+node_modules
+dist
+.solid
+.output
+.vercel
+.netlify
+.vinxi
+.vscode
+.env
+.env.local
+.env.development
+.env.production
