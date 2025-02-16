@@ -71,7 +71,7 @@ export const I18nProvider: ParentComponent<{
 
     return Object.entries(params).reduce<string>((acc, [paramKey, paramValue]) => {
       const placeholder = `{{${paramKey}}}`;
-      if (!acc.includes(placeholder)) {
+      if (!acc.includes(placeholder) && paramKey !== 'count') {
         console.warn(`Unused parameter "${paramKey}" in translation`);
       }
       return acc.replace(placeholder, String(paramValue));
