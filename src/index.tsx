@@ -25,7 +25,7 @@ export const I18nProvider: ParentComponent<{
       // Navigate to the translation
       for (const k of keys) {
         if (current && typeof current === 'object' && k in current) {
-          current = (current as Record<string, any>)[k];
+          current = (current as RecursiveRecord<string>)[k];
         }
       }
 

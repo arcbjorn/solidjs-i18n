@@ -7,7 +7,7 @@ import solid from "eslint-plugin-solid";
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
-    files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
+    files: ["src/**/*.{ts,tsx}"],
     languageOptions: {
       globals: {
         ...globals.browser
@@ -30,7 +30,12 @@ export default [
       "solid/jsx-no-undef": "error",
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-unused-vars": ["warn", {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }],
+      "no-unused-vars": "off"
     },
   },
 ];
