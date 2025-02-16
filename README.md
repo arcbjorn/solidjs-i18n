@@ -152,6 +152,45 @@ t('welcome', { site: 'My App', name: 'John' })
 t('items', { count: 5 })
 ```
 
+### Plural Forms
+
+The library supports plural forms using the native `Intl.PluralRules` API. You can define different translations based on quantity:
+
+```typescript
+const translations = {
+  en: {
+    messages: {
+      count: {
+        zero: 'No messages',
+        one: '{{count}} message',
+        other: '{{count}} messages'
+      }
+    }
+  },
+  es: {
+    messages: {
+      count: {
+        zero: 'No hay mensajes',
+        one: '{{count}} mensaje',
+        other: '{{count}} mensajes'
+      }
+    }
+  }
+};
+
+// Usage
+t('messages.count', { count: 0 }) // "No messages"
+t('messages.count', { count: 1 }) // "1 message"
+t('messages.count', { count: 5 }) // "5 messages"
+```
+
+Plural forms support:
+- `zero`: Used for zero quantity (optional)
+- `one`: Used for singular form
+- `other`: Used for plural form (required as fallback)
+
+The correct plural form is automatically selected based on the current locale's rules using `Intl.PluralRules`.
+
 ### Language Switching
 
 ```typescript
@@ -178,8 +217,9 @@ const LanguageSwitcher = () => {
    - All translations must be loaded at initialization
 
 2. **Pluralization**
-   - No built-in pluralization rules
-   - You'll need to handle pluralization manually using parameters
+   - Basic pluralization support through `Intl.PluralRules`
+   - Supports `zero`, `one`, and `other` plural forms
+   - More complex plural rules must be handled manually
 
 3. **Number/Date Formatting**
    - No built-in number or date formatting
@@ -217,6 +257,46 @@ const LanguageSwitcher = () => {
    - Split large translation files by feature/module
    - Use a consistent file structure across locales
    - Consider automated validation of translation completeness
+
+## Development
+
+### Available Scripts
+
+- `pnpm start` or `pnpm run dev` - Starts the development server using Vite
+- `pnpm run build` - Builds the project for production
+- `pnpm run serve` - Previews the production build locally
+- `pnpm test` - Runs the test suite
+- `pnpm run test:coverage` - Runs tests with coverage reporting
+- `pnpm run lint` - Checks for linting issues
+- `pnpm run lint:fix` - Automatically fixes linting issues
+- `pnpm run format` - Formats all TypeScript/TSX files using Prettier
+- `pnpm run format:check` - Checks if files are properly formatted
+
+### Development Workflow
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm start
+   ```
+4. Make your changes
+5. Run tests and linting:
+   ```bash
+   npm test
+   npm run lint
+   ```
+6. Format your code:
+   ```bash
+   npm run format
+   ```
+7. Build for production:
+   ```bash
+   npm run build
+   ```
 
 ## Contributing
 
