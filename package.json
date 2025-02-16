@@ -1,5 +1,5 @@
 {
-  "name": "@arc/solid-i18n",
+  "name": "solidjs-i18n",
   "version": "0.1.0",
   "description": "A lightweight, type-safe internationalization library for SolidJS applications",
   "type": "module",

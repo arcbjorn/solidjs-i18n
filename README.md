@@ -16,17 +16,17 @@ A lightweight, type-safe internationalization library for SolidJS applications.
 ## Installation
 
 ```bash
-npm install @arc/solid-i18n
+npm install arc-solid-i18n
 # or
-yarn add @arc/solid-i18n
+yarn add arc-solid-i18n
 # or
-pnpm add @arc/solid-i18n
+pnpm add arc-solid-i18n
 ```
 
 ## Quick Start
 
 ```typescript
-import { I18nProvider, useI18n } from '@arc/solid-i18n';
+import { I18nProvider, useI18n } from 'arc-solid-i18n';
 
 // Define your translations
 const translations = {
@@ -233,11 +233,7 @@ const LanguageSwitcher = () => {
    - No support for fallback locale chains
    - Missing translations simply return the key
 
-6. **Type Safety**
-   - While the library is written in TypeScript, it doesn't provide type checking for translation keys
-   - Consider using a code generation step if you need compile-time checking of translation keys
-
-7. **Performance**
+6. **Performance**
    - All translations are kept in memory
    - Not suitable for extremely large translation sets (>1MB)
 
@@ -262,9 +258,8 @@ const LanguageSwitcher = () => {
 
 ### Available Scripts
 
-- `pnpm start` or `pnpm run dev` - Starts the development server using Vite
+- `pnpm dev` - Starts the development server using Vite
 - `pnpm run build` - Builds the project for production
-- `pnpm run serve` - Previews the production build locally
 - `pnpm test` - Runs the test suite
 - `pnpm run test:coverage` - Runs tests with coverage reporting
 - `pnpm run lint` - Checks for linting issues
@@ -277,25 +272,25 @@ const LanguageSwitcher = () => {
 1. Clone the repository
 2. Install dependencies:
    ```bash
-   npm install
+   pnpm install
    ```
 3. Start the development server:
    ```bash
-   npm start
+   pnpm dev
    ```
 4. Make your changes
 5. Run tests and linting:
    ```bash
-   npm test
-   npm run lint
+   pnpm test
+   pnpm run lint
    ```
 6. Format your code:
    ```bash
-   npm run format
+   pnpm run format
    ```
 7. Build for production:
    ```bash
-   npm run build
+   pnpm run build
    ```
 
 ## Contributing
