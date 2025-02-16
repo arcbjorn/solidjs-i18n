@@ -1,6 +1,6 @@
 import { createSignal, createContext, useContext, ParentComponent } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import type { Translations, I18nContextType, TranslationParams, RecursiveRecord } from './types';
+import type { Translations, I18nContextType, TranslationParams, RecursiveRecord, PluralRules } from './types';
 
 const I18nContext = createContext<I18nContextType>();
 
@@ -12,36 +12,57 @@ export const I18nProvider: ParentComponent<{
   const [currentLocale, setCurrentLocale] = createSignal(props.defaultLocale);
   const [translations] = createStore(props.translations);
 
+  const getPluralForm = (count: number, locale: string): keyof PluralRules => {
+    const pluralRules = new Intl.PluralRules(locale);
+    return pluralRules.select(count) as keyof PluralRules;
+  };
+
   const t = (key: string, params?: TranslationParams): string => {
     try {
       const keys = key.split('.');
-      let current: string | RecursiveRecord<string> = translations[currentLocale()];
+      let current: string | RecursiveRecord<string> | PluralRules = translations[currentLocale()];
 
+      // Navigate to the translation
       for (const k of keys) {
         if (current && typeof current === 'object' && k in current) {
-          current = current[k];
+          current = (current as Record<string, any>)[k];
         }
+      }
+
+      // Handle pluralization
+      if (current && typeof current === 'object' && 'other' in current) {
+        if (typeof params?.count !== 'number') {
+          console.warn(`Count parameter missing for plural translation: ${key}`);
+          return key;
+        }
+        
+        const pluralForm = getPluralForm(params.count, currentLocale());
+        const pluralKey = pluralForm as keyof typeof current;
+        const value = (current[pluralKey] || current.other) as string;
+        return interpolateParams(value, params);
       }
 
       if (typeof current !== 'string') {
         throw new Error(`Translation not found: ${key}`);
       }
 
-      const value = current;
-
-      if (!params) return value;
-
-      return Object.entries(params).reduce<string>((acc, [paramKey, paramValue]) => {
-        const placeholder = `{{${paramKey}}}`;
-        if (!acc.includes(placeholder)) {
-          console.warn(`Unused parameter "${paramKey}" in translation: ${key}`);
-        }
-        return acc.replace(placeholder, String(paramValue));
-      }, value);
+      return interpolateParams(current, params);
     } catch (error) {
       console.warn(error);
       return key;
     }
+  };
+
+  const interpolateParams = (value: string, params?: TranslationParams): string => {
+    if (!params) return value;
+
+    return Object.entries(params).reduce<string>((acc, [paramKey, paramValue]) => {
+      const placeholder = `{{${paramKey}}}`;
+      if (!acc.includes(placeholder)) {
+        console.warn(`Unused parameter "${paramKey}" in translation`);
+      }
+      return acc.replace(placeholder, String(paramValue));
+    }, value);
   };
 
   const context: I18nContextType = {
@@ -49,6 +70,12 @@ export const I18nProvider: ParentComponent<{
     setLocale: setCurrentLocale,
     currentLocale,
     availableLocales: () => Object.keys(translations),
+    formatNumber: (value: number, options?: Intl.NumberFormatOptions) => {
+      return new Intl.NumberFormat(currentLocale(), options).format(value);
+    },
+    formatDate: (value: Date | number, options?: Intl.DateTimeFormatOptions) => {
+      return new Intl.DateTimeFormat(currentLocale(), options).format(value);
+    },
   };
 
   return (
