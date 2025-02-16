@@ -16,11 +16,13 @@ export const I18nProvider: ParentComponent<{
   defaultLocale: string;
 }> = (props) => {
   const [currentLocale, setCurrentLocale] = createSignal(props.defaultLocale);
-  const [translations, setTranslations] = createStore<Translations>({});
+  const [translations, setTranslations] = createStore<Translations>(props.translations);
 
   // Track translations changes in a reactive context
   createEffect(() => {
-    setTranslations(reconcile(props.translations));
+    if (props.translations !== translations) {
+      setTranslations(reconcile(props.translations));
+    }
   });
 
   const getPluralForm = (count: number, locale: string): keyof PluralRules => {
