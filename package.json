@@ -11,9 +11,9 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/solid-i18n.es.js",
-      "require": "./dist/solid-i18n.cjs.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/solid-i18n.cjs.js"
     }
   },
   "scripts": {
