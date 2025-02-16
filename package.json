@@ -1,13 +1,25 @@
 {
-  "name": "vite-template-solid",
-  "version": "0.0.0",
-  "description": "",
+  "name": "solid-i18n",
+  "version": "0.1.0",
+  "description": "A lightweight, type-safe internationalization library for SolidJS applications",
   "type": "module",
+  "main": "./dist/solid-i18n.cjs.js",
+  "module": "./dist/solid-i18n.es.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/solid-i18n.es.js",
+      "require": "./dist/solid-i18n.cjs.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
-    "start": "vite",
     "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview",
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "prepublishOnly": "pnpm run lint && pnpm run test && pnpm run build",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
@@ -15,7 +27,23 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage"
   },
+  "keywords": [
+    "solid",
+    "solidjs",
+    "i18n",
+    "internationalization",
+    "translation",
+    "typescript"
+  ],
+  "author": "Arcbjorn",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arcbjorn/solid-i18n"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.9.0"
+  },
   "devDependencies": {
     "@eslint/js": "^9.20.0",
     "@solidjs/testing-library": "^0.8.10",
@@ -32,8 +60,5 @@
     "vite": "^6.0.0",
     "vite-plugin-solid": "^2.11.1",
     "vitest": "^3.0.5"
-  },
-  "dependencies": {
-    "solid-js": "^1.9.3"
   }
 }

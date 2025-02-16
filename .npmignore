@@ -1,0 +1,17 @@
+.github
+src
+node_modules
+.solid
+.output
+.vercel
+.netlify
+.vinxi
+.vscode
+coverage
+.prettierrc
+.prettierignore
+.eslintrc
+eslint.config.js
+vitest.config.ts
+tsconfig.json
+*.log 
