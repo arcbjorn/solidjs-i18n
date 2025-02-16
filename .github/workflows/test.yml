@@ -18,17 +18,35 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Run linting
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Run formatting check
-        run: npm run format:check
+        run: pnpm run format:check
 
       - name: Run tests
-        run: npm run test:coverage
+        run: pnpm run test:coverage
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
