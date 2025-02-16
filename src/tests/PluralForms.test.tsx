@@ -1,6 +1,6 @@
-import { describe, expect, test } from 'vitest';
-import { render, screen, fireEvent } from '@solidjs/testing-library';
+import { fireEvent, render, screen } from '@solidjs/testing-library';
 import '@testing-library/jest-dom';
+import { describe, expect, test } from 'vitest';
 import PluralForms from '../examples/PluralForms';
 
 describe('PluralForms', () => {
@@ -13,12 +13,12 @@ describe('PluralForms', () => {
   test('updates counts correctly in English', async () => {
     render(() => <PluralForms />);
     const plusButton = screen.getByText('+');
-    
+
     // Test singular
     await fireEvent.click(plusButton);
     expect(screen.getByText('1 message')).toBeInTheDocument();
     expect(screen.getByText('One apple')).toBeInTheDocument();
-    
+
     // Test plural
     await fireEvent.click(plusButton);
     expect(screen.getByText('2 messages')).toBeInTheDocument();
@@ -29,16 +29,16 @@ describe('PluralForms', () => {
     render(() => <PluralForms />);
     const plusButton = screen.getByText('+');
     const switchButton = screen.getByText('Switch to Spanish');
-    
+
     // Set count to 2
     await fireEvent.click(plusButton);
     await fireEvent.click(plusButton);
-    
+
     // Switch to Spanish
     await fireEvent.click(switchButton);
     expect(screen.getByText('2 mensajes')).toBeInTheDocument();
     expect(screen.getByText('2 manzanas')).toBeInTheDocument();
-    
+
     // Back to zero in Spanish
     const minusButton = screen.getByText('-');
     await fireEvent.click(minusButton);
@@ -46,4 +46,4 @@ describe('PluralForms', () => {
     expect(screen.getByText('0 mensajes')).toBeInTheDocument();
     expect(screen.getByText('0 manzanas')).toBeInTheDocument();
   });
-}); 
+});

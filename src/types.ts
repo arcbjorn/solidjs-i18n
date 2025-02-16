@@ -18,11 +18,13 @@ export interface I18nContextType {
 }
 
 /** Type-safe translation key path generator */
-export type TranslationKey<T, Depth extends number[] = []> = Depth['length'] extends 8 ? never : {
-  [K in keyof T]: T[K] extends string 
-    ? K & string
-    : `${K & string}.${TranslationKey<T[K], [...Depth, 1]> & string}`;
-}[keyof T];
+export type TranslationKey<T, Depth extends number[] = []> = Depth['length'] extends 8
+  ? never
+  : {
+      [K in keyof T]: T[K] extends string
+        ? K & string
+        : `${K & string}.${TranslationKey<T[K], [...Depth, 1]> & string}`;
+    }[keyof T];
 
 export interface PluralRules {
   zero?: string;
@@ -30,4 +32,4 @@ export interface PluralRules {
   few?: string;
   many?: string;
   other: string;
-} 
+}

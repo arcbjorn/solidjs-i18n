@@ -1,6 +1,12 @@
-import { createSignal, createContext, useContext, ParentComponent } from 'solid-js';
-import { createStore } from 'solid-js/store';
-import type { Translations, I18nContextType, TranslationParams, RecursiveRecord, PluralRules } from './types';
+import { ParentComponent, createContext, createEffect, createSignal, useContext } from 'solid-js';
+import { createStore, reconcile } from 'solid-js/store';
+import type {
+  I18nContextType,
+  PluralRules,
+  RecursiveRecord,
+  TranslationParams,
+  Translations,
+} from './types';
 
 const I18nContext = createContext<I18nContextType>();
 
@@ -10,7 +16,12 @@ export const I18nProvider: ParentComponent<{
   defaultLocale: string;
 }> = (props) => {
   const [currentLocale, setCurrentLocale] = createSignal(props.defaultLocale);
-  const [translations] = createStore(props.translations);
+  const [translations, setTranslations] = createStore<Translations>({});
+
+  // Track translations changes in a reactive context
+  createEffect(() => {
+    setTranslations(reconcile(props.translations));
+  });
 
   const getPluralForm = (count: number, locale: string): keyof PluralRules => {
     const pluralRules = new Intl.PluralRules(locale);
@@ -35,7 +46,7 @@ export const I18nProvider: ParentComponent<{
           console.warn(`Count parameter missing for plural translation: ${key}`);
           return key;
         }
-        
+
         const pluralForm = getPluralForm(params.count, currentLocale());
         const pluralKey = pluralForm as keyof typeof current;
         const value = (current[pluralKey] || current.other) as string;
@@ -78,11 +89,7 @@ export const I18nProvider: ParentComponent<{
     },
   };
 
-  return (
-    <I18nContext.Provider value={context}>
-      {props.children}
-    </I18nContext.Provider>
-  );
+  return <I18nContext.Provider value={context}>{props.children}</I18nContext.Provider>;
 };
 
 /** Hook to use translations in components */
@@ -92,4 +99,4 @@ export const useI18n = () => {
     throw new Error('useI18n must be used within an I18nProvider');
   }
   return context;
-}; 
+};

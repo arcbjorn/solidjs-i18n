@@ -7,25 +7,25 @@ const translations = {
     greeting: 'Hello, {{name}}!',
     items: {
       count: 'You have {{count}} items',
-      empty: 'No items found'
+      empty: 'No items found',
     },
     actions: {
       save: 'Save',
-      delete: 'Delete'
-    }
+      delete: 'Delete',
+    },
   },
   es: {
     welcome: '¡Bienvenido a nuestra aplicación!',
     greeting: '¡Hola, {{name}}!',
     items: {
       count: 'Tienes {{count}} artículos',
-      empty: 'No se encontraron artículos'
+      empty: 'No se encontraron artículos',
     },
     actions: {
       save: 'Guardar',
-      delete: 'Eliminar'
-    }
-  }
+      delete: 'Eliminar',
+    },
+  },
 };
 
 const GreetingContent: Component = () => {
@@ -36,10 +36,10 @@ const GreetingContent: Component = () => {
     <div>
       <h1>{t('welcome')}</h1>
       <p>{t('greeting', { name: 'John' })}</p>
-      
+
       <div>
         <p>{count() === 0 ? t('items.empty') : t('items.count', { count: count() })}</p>
-        <button onClick={() => setCount(c => c + 1)}>Add Item</button>
+        <button onClick={() => setCount((c) => c + 1)}>Add Item</button>
       </div>
 
       <button onClick={() => setLocale(currentLocale() === 'en' ? 'es' : 'en')}>
@@ -57,4 +57,4 @@ const Greeting: Component = () => {
   );
 };
 
-export default Greeting; 
+export default Greeting;

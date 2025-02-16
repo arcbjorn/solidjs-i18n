@@ -1,6 +1,6 @@
-import { describe, expect, test } from 'vitest';
-import { render, screen, fireEvent } from '@solidjs/testing-library';
+import { fireEvent, render, screen } from '@solidjs/testing-library';
 import '@testing-library/jest-dom';
+import { describe, expect, test } from 'vitest';
 import Greeting from '../examples/Greeting';
 
 describe('i18n Example', () => {
@@ -15,7 +15,7 @@ describe('i18n Example', () => {
     render(() => <Greeting />);
     const switchButton = screen.getByText('Switch to Spanish');
     await fireEvent.click(switchButton);
-    
+
     expect(screen.getByText('¡Bienvenido a nuestra aplicación!')).toBeInTheDocument();
     expect(screen.getByText('¡Hola, John!')).toBeInTheDocument();
     expect(screen.getByText('No se encontraron artículos')).toBeInTheDocument();
@@ -25,7 +25,7 @@ describe('i18n Example', () => {
     render(() => <Greeting />);
     const addButton = screen.getByText('Add Item');
     await fireEvent.click(addButton);
-    
+
     expect(screen.getByText('You have 1 items')).toBeInTheDocument();
   });
-}); 
+});

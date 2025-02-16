@@ -7,33 +7,33 @@ const translations = {
       count: {
         zero: 'No messages',
         one: '{{count}} message',
-        other: '{{count}} messages'
-      }
+        other: '{{count}} messages',
+      },
     },
     apples: {
       count: {
         zero: 'No apples',
         one: 'One apple',
-        other: '{{count}} apples'
-      }
-    }
+        other: '{{count}} apples',
+      },
+    },
   },
   es: {
     messages: {
       count: {
         zero: 'No hay mensajes',
         one: '{{count}} mensaje',
-        other: '{{count}} mensajes'
-      }
+        other: '{{count}} mensajes',
+      },
     },
     apples: {
       count: {
         zero: 'No hay manzanas',
         one: 'Una manzana',
-        other: '{{count}} manzanas'
-      }
-    }
-  }
+        other: '{{count}} manzanas',
+      },
+    },
+  },
 };
 
 const PluralFormsContent: Component = () => {
@@ -45,9 +45,9 @@ const PluralFormsContent: Component = () => {
       <div>
         <p>{t('messages.count', { count: count() })}</p>
         <p>{t('apples.count', { count: count() })}</p>
-        <button onClick={() => setCount(c => Math.max(0, c - 1))}>-</button>
+        <button onClick={() => setCount((c) => Math.max(0, c - 1))}>-</button>
         <span>{count()}</span>
-        <button onClick={() => setCount(c => c + 1)}>+</button>
+        <button onClick={() => setCount((c) => c + 1)}>+</button>
       </div>
 
       <button onClick={() => setLocale(currentLocale() === 'en' ? 'es' : 'en')}>
@@ -63,4 +63,4 @@ const PluralForms: Component = () => (
   </I18nProvider>
 );
 
-export default PluralForms; 
+export default PluralForms;
